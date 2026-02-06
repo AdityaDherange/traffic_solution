@@ -1,0 +1,25 @@
+# Python dependencies for Smart Traffic System
+# Core Framework
+streamlit>=1.28.0
+streamlit-folium>=0.15.0
+
+# Map and Geolocation
+folium>=0.14.0
+requests>=2.31.0
+
+# Image Processing
+Pillow>=10.0.0
+
+# AI Chatbot - Google Gemini
+google-generativeai>=0.3.0
+
+# ML Models (optional - for actual model implementation)
+# tensorflow>=2.13.0
+# ultralytics>=8.0.0
+# torch>=2.0.0
+
+# Voice Assistant (optional)
+# pyttsx3>=2.90
+
+# Utilities
+python-dateutil>=2.8.2
