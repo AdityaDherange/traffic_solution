@@ -5,6 +5,7 @@ from .analysis import analysis_page
 from .route_planning import route_planning_page
 from .heatmap import heatmap_page
 from .sidebar import render_sidebar
+from .chatbot import chatbot_page
 
 __all__ = [
     'login_page',
@@ -13,5 +14,6 @@ __all__ = [
     'analysis_page',
     'route_planning_page',
     'heatmap_page',
-    'render_sidebar'
+    'render_sidebar',
+    'chatbot_page'
 ]

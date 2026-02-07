@@ -23,7 +23,8 @@ def render_sidebar():
             'dashboard': '🏠 Dashboard',
             'analysis': '📸 Traffic Analysis',
             'route': '🗺️ Route Planning',
-            'heatmap': '🔥 Heat Map'
+            'heatmap': '🔥 Heat Map',
+            'chatbot': '🤖 AI Assistant'
         }
         
         for key, name in pages.items():

@@ -266,16 +266,22 @@ def chatbot_page():
     
     # Welcome message if no messages
     if not st.session_state.chat_messages:
-        welcome_msg = """👋 Hello! I'm your AI Traffic Assistant powered by Google Gemini.
+        welcome_msg = """👋 Hello! I'm your AI Route & Traffic Assistant powered by **Google Gemini Pro**.
 
-I can help you with:
+🗺️ **ROUTE FINDING (My Main Feature!):**
+Just tell me where you want to go, and I'll find the **shortest route** for you!
+• "Take me to Mumbai Airport"
+• "How do I get to Bandra?"
+• "Navigate to CST station"
+• "Shortest route to Powai"
+
+📊 **Other things I can help with:**
 • **Real-time Traffic Status** - "What's the traffic at Ghatkopar?"
 • **Traffic Predictions** - "Will Dadar be congested in 15 minutes?"
-• **Route Planning** - "Take me to Mumbai Airport"
 • **Heat Map Info** - "Show me the red zones"
 • **Quick Actions** - "Execute traffic analysis now"
 
-How can I assist you today?"""
+Where would you like to go today? 🚗"""
         st.session_state.chat_messages.append({
             "role": "assistant",
             "content": welcome_msg,

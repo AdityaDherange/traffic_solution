@@ -27,21 +27,28 @@ class TrafficChatbot:
         self.chat_history = []
         
         # System context for the chatbot
-        self.system_context = """You are an intelligent AI assistant integrated into the Smart Traffic System in Mumbai, India.
+        self.system_context = """You are an intelligent AI Route & Traffic Assistant integrated into the Smart Traffic System in Mumbai, India.
 
-You are a GENERAL PURPOSE AI assistant that can help with ANY topic or question. You have expertise in:
+You are specialized in finding the SHORTEST and FASTEST routes to destinations. You are powered by Google Gemini Pro.
 
 🚦 TRAFFIC & TRANSPORTATION (Primary Focus):
+- **ROUTE PLANNING (MAIN FEATURE):** When users ask for directions, navigation, or how to get somewhere, you help them find the shortest and fastest route. You can handle natural language requests like:
+  - "Take me to Mumbai Airport"
+  - "How do I get to Bandra?"
+  - "Navigate to CST station"
+  - "I want to go to Dadar"
+  - "What's the shortest route to Powai?"
+  - "Find directions to Andheri"
 - Real-time traffic status inquiries - providing current traffic density, vehicle counts, and estimated delays
 - Predictive traffic advice - warning about upcoming congestion based on patterns
 - Anomaly and incident alerts - notifying about accidents, fires, or unusual traffic spikes
 - Historical traffic data queries - summarizing past traffic patterns
-- Route planning assistance - helping users navigate to destinations
 - Traffic analysis interpretation - explaining analysis results
 
 Mumbai locations you know well: Ghatkopar, Dadar, Kanjurmarg, Andheri, Bandra, Kurla, 
 Vidya Vihar, Mulund, Thane, Powai, BKC, Worli, Lower Parel, CST, Churchgate, Marine Drive,
-Borivali, Malad, Goregaon, Jogeshwari, Santacruz, Vile Parle, Mumbai Airport, Chembur.
+Borivali, Malad, Goregaon, Jogeshwari, Santacruz, Vile Parle, Mumbai Airport, Chembur,
+Navi Mumbai, Panvel, Vashi, Nerul, Kharghar, CBD Belapur, Airoli, Ghansoli, Kopar Khairane.
 
 🌐 GENERAL KNOWLEDGE & ASSISTANCE:
 - Answer questions on ANY topic: science, technology, history, geography, math, coding, etc.
@@ -50,6 +57,13 @@ Borivali, Malad, Goregaon, Jogeshwari, Santacruz, Vile Parle, Mumbai Airport, Ch
 - Creative writing, brainstorming, and idea generation
 - General advice and recommendations
 - Current events and general knowledge
+
+ROUTE PLANNING GUIDELINES:
+- When a user mentions ANY destination or asks how to get somewhere, ALWAYS trigger the route action
+- Provide helpful context about the destination (landmarks, what's nearby)
+- Mention estimated travel time and distance when available
+- Suggest best times to travel to avoid traffic
+- For popular destinations, mention useful tips
 
 GUIDELINES:
 - Be helpful, accurate, and comprehensive in your responses
@@ -182,15 +196,45 @@ You can answer ANY question the user asks - you are not limited to traffic topic
         if any(phrase in message_lower for phrase in ["analyze traffic", "run analysis", "execute traffic analysis", "analyze now"]):
             return "action_analyze", {}
         
-        if any(phrase in message_lower for phrase in ["plan route", "take me to", "navigate to", "go to", "route to", "directions to"]):
-            # Extract destination
+        # Enhanced route detection with more natural language patterns
+        route_triggers = [
+            "plan route", "take me to", "navigate to", "go to", "route to", 
+            "directions to", "how do i get to", "how to get to", "how to reach",
+            "shortest route to", "fastest route to", "best route to", "way to",
+            "i want to go to", "i need to go to", "i want to reach", "bring me to",
+            "drive me to", "travel to", "get me to", "find route to", "show route to",
+            "path to", "road to", "distance to", "commute to"
+        ]
+        
+        if any(phrase in message_lower for phrase in route_triggers):
+            # Extract destination with more patterns
             patterns = [
                 r"take me to (.+)",
                 r"navigate to (.+)",
                 r"go to (.+)",
                 r"route to (.+)",
                 r"directions to (.+)",
-                r"plan route to (.+)"
+                r"plan route to (.+)",
+                r"how do i get to (.+)",
+                r"how to get to (.+)",
+                r"how to reach (.+)",
+                r"shortest route to (.+)",
+                r"fastest route to (.+)",
+                r"best route to (.+)",
+                r"way to (.+)",
+                r"i want to go to (.+)",
+                r"i need to go to (.+)",
+                r"i want to reach (.+)",
+                r"bring me to (.+)",
+                r"drive me to (.+)",
+                r"travel to (.+)",
+                r"get me to (.+)",
+                r"find route to (.+)",
+                r"show route to (.+)",
+                r"path to (.+)",
+                r"road to (.+)",
+                r"distance to (.+)",
+                r"commute to (.+)"
             ]
             for pattern in patterns:
                 match = re.search(pattern, message_lower)
@@ -386,7 +430,7 @@ Current analysis results (if relevant):
 _chatbot_instance = None
 _current_api_key = None
 
-def get_chatbot(api_key: str = "AIzaSyCqug2ZJsNyMdCdSt-GwrlmUyhulEoCGHU") -> TrafficChatbot:
+def get_chatbot(api_key: str = "AIzaSyDYXCcP_myiqq6dI0UYsBN8NQx23dzqrBM") -> TrafficChatbot:
     """Get or create chatbot instance"""
     global _chatbot_instance, _current_api_key
     # Reset instance if API key changed or instance doesn't exist
